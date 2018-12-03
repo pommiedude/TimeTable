@@ -1,0 +1,11 @@
+TimeTable.Application.Tests/bin
+TimeTable.Application.Tests/obj
+TimeTable.Application/bin
+TimeTable.Application/obj
+TimeTable.Persistance/bin
+TimeTable.Persistance/obj
+TimeTable.Domain/bin
+TimeTable.Domain/obj
+TimeTable.Application/bin
+TimeTable.Application/obj
+.vs

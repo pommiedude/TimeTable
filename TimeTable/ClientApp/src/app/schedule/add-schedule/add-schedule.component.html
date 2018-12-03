@@ -1,0 +1,35 @@
+<div class="col-md-6">
+    <h2 class="text-center">Add Schedule</h2>
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Schedule Title:</label>
+        <input formControlName="title" placeholder="Title of schedule" name="title" class="form-control" id="title" />
+
+        <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+            <div *ngIf="f.title.errors.required">Title is required</div>
+            <div *ngIf="f.title.errors.minlength">Title is not long enough</div>
+          </div>
+        </div>
+  
+      <div class="form-group">
+        <label for="line">Line:</label>
+        <input formControlName="line" placeholder="Train line for schedule" name="line" class="form-control" id="line" />
+        <div *ngIf="submitted && f.line.errors" class="invalid-feedback">
+            <div *ngIf="f.line.errors.required">Line is required</div>
+            <div *ngIf="f.line.errors.minlength">Line is not long enough</div>
+        </div>
+    </div>
+    
+      <div class="form-group">
+        <label for="date">Last Name:</label>
+        <input type="date" formControlName="date" placeholder="Start Date" name="date" class="form-control" id="date">
+        <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+            <div *ngIf="f.date.errors.required">Date is required</div>
+            <div *ngIf="f.date.errors.validDate">Date is invalid</div>
+        </div>
+      </div>
+  
+      <button class="btn btn-success">Add</button>
+    </form>
+  </div>
+  

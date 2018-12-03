@@ -1,0 +1,28 @@
+<h1>Schedules</h1>
+
+<p *ngIf="!vm"><em>Loading...</em></p>
+
+
+<button class="btn btn-danger" (click)="add()"> Add Schedule</button>
+
+<table class='table' *ngIf="vm">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let schedule of vm.schedules">
+      <td>{{ schedule.scheduleId }}</td>
+      <td>{{ schedule.name }}</td>
+      <td>{{ schedule.date | date }}</td>
+      <td>
+        <button class="btn btn-danger" (click)="delete(schedule)"> Delete</button>
+        <button class="btn btn-danger" (click)="edit(schedule)" style="margin-left: 20px;"> Edit</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
