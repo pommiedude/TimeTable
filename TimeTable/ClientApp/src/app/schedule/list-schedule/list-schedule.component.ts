@@ -1,8 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ScheduleLookupModel, ScheduleListViewModel } from './../../../_models/index';
 import { ScheduleService } from './../../../_services/schedule-service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../_state/app.state';
+
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 
 @Component({
@@ -11,37 +14,32 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
   templateUrl: './list-schedule.component.html'
 })
 export class ListScheduleComponent implements OnInit {
+
+  schedules: Observable<ScheduleLookupModel[]>;
+
   public vm: ScheduleListViewModel;
   private hubConnection: HubConnection;
 
   constructor(
     private router: Router,
     @Inject('BASE_URL') baseUrl: string,
-    private _scheduleService: ScheduleService) {
+    private _scheduleService: ScheduleService,
+    private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
-    this._scheduleService.getSchedules().subscribe(result => {
-      this.vm = result;
-    }, error => console.error(error));
-
-    this.hubConnection = new HubConnectionBuilder().withUrl('http://localhost:5000/schedules').build();
-    this.hubConnection
-      .start()
-      .then(() => console.log('Connection started!'))
-      .catch(err => console.log('Error while establishing connection :('));
-
-      this.hubConnection.on('updatedSchedule', (name: string, message: string) => {
-        // TODO: Update this.vm.schedules variable with the schedules received, or if
-        // smaller transaction are used delete, add single components etc...
-      });
+    // TODO : Switch over to use state store!
+    // this.schedules = this.store.select('schedule');
+     this._scheduleService.getSchedules().subscribe(result => {
+       this.vm = result;
+     }, error => console.error(error));
   }
 
   delete(schedule: ScheduleLookupModel): void {
     this._scheduleService.delete(schedule.scheduleId)
-      .subscribe(data => {
-        this.vm.schedules = this.vm.schedules.filter(u => u !== schedule);
-      });
+       .subscribe(data => {
+         this.vm.schedules = this.vm.schedules.filter(u => u !== schedule);
+       });
   }
 
   add(): void {

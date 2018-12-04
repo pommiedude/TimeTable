@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ScheduleLookupModel, ScheduleListViewModel } from '../_models';
 
@@ -10,7 +9,7 @@ export class ScheduleService {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   getSchedules(): Observable<ScheduleListViewModel> {
-    return this.http.get<ScheduleListViewModel>(this.baseUrl + 'api/schedule').pipe(map(res => res));
+    return this.http.get<ScheduleListViewModel>(this.baseUrl + 'api/schedule');
   }
 
   getById(id: number): Observable<ScheduleLookupModel> {

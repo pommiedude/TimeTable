@@ -14,6 +14,7 @@ namespace TimeTable.Application.Infrastructure
 
         public RequestPostProcessorBehavior(IHubContext<ScheduleHub, ITypedHubClient> scheduleUpdateHub)
         {
+            _scheduleUpdateHub = scheduleUpdateHub;
         }
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -24,7 +25,7 @@ namespace TimeTable.Application.Infrastructure
 
             // Dummy code to send all schedules to the clients
             // List<Domain.Entities.Schedule> schedules = new List<Domain.Entities.Schedule>();
-            // _scheduleUpdateHub.Clients.All.BroadcastMessage("updatedSchedule", schedules);
+            _scheduleUpdateHub.Clients.All.BroadcastMessage("type", "payload");
 
             return next();
         }
